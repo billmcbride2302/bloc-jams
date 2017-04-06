@@ -79,16 +79,26 @@ var currentlyPlayingSong = null;
 var songRows = document.getElementsByClassName('album-view-song-item');
 
 
-   var findParentByClassName = function(element, targetClass) {
-        if (element) {
+var findParentByClassName = function(element, targetClass) {
+   if (element) {
             var currentParent = element.parentElement;
+       
             while (currentParent.className !== targetClass && currentParent.className !== null) {
                 currentParent = currentParent.parentElement;
+                
             }
-            return currentParent;
+       
+            if (currentParent == null) {
+            console.log("No parent found");
+    }
+       
+            else if (currentParent !== targetClass) {
+            console.log("No parent found with that class name!");
         }
-    };
-
+       
+       return currentParent; 
+}
+}; 
 
 var getSongItem = function(element) {
     switch (element.className) {
