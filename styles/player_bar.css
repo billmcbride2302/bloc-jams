@@ -32,6 +32,15 @@
      text-align: left;
      padding-right: 1rem;
  }
+
+.player-bar .main-controls .previous {
+     margin-right: 16.5%;
+ }
+ 
+ .player-bar .main-controls .play-pause {
+     margin-right: 15%;
+     font-size: 1.6rem;
+ }
  
  .player-bar .currently-playing {
      width: 50%;
@@ -43,21 +52,9 @@
      width: 25%;
      text-align: right;
  }
-
-
 .player-bar a {
      font-size: 1.1rem;
-    vertical-align: middle;
- 
- }
-
- .player-bar .main-controls .previous {
-     margin-right: 16.5%;
- }
- 
- .player-bar .main-controls .play-pause {
-     margin-right: 15%;
-     font-size: 1.6rem;
+     vertical-align: middle;
  }
 
  .player-bar .currently-playing .song-name,
@@ -83,8 +80,7 @@
  .player-bar .currently-playing .artist-song-mobile {
      display: none;
  }
-
-
+ 
  .seek-control {
      position: relative;
      font-size: 0.8rem;
@@ -150,8 +146,7 @@
      display: inline-block;
      width: 5.75rem;
      vertical-align: middle;
-}
-
+ }
 
  @media (max-width: 640px) {
      .player-bar {
