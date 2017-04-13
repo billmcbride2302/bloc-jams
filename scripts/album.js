@@ -7,29 +7,18 @@ var currentVolume = 80;
 
 
 var setCurrentTimeInPlayerBar = function(currentTime) {
-    var $currentTime = $('.seek control .current-time'); 
-    $currentTime.text(currentTime);   
+    $('.current-time').text(filterTimeCode(currentTime));
 };
 
 var setTotalTimeInPlayerBar = function(totalTime) {
-    var $totalTime = $('.seek-control .total-time'); 
-    $totalTime.text(totalTime); 
+    $('.currently-playing .total-time').text(filterTimeCode(totalTime));
 };
 
 var filterTimeCode = function(timeInSeconds) {
-   var seconds = Number.parseFloat(timeInSeconds);
-   var wholeSeconds = Math.floor(seconds);
-   var minutes = Math.floor(wholeSeconds / 60);
-    
-   var remainingSeconds = wholeSeconds % 60;
-   var output = minutes + ':';
-   
-    if (remainingSeconds < 10) {
-        output += '0';   
-    }
-    
-     output += remainingSeconds;
-     return output;
+     var minutes = Math.floor(seconds / 60);
+     seconds = Math.floor(seconds % 60);
+     seconds = seconds < 10 ? "0" + seconds : seconds;
+     return minutes + ":" + seconds;
  };
 
 
@@ -87,7 +76,7 @@ var createSongRow = function(songNumber, songName, songLength) {
      
 var clickHandler = function() {
         var songNumber = parseInt($(this).attr('data-song-number'));
-        updateSeekBarWhileSongPlays(); 
+        
         
         if (currentlyPlayingSongNumber !== null) {
             // Revert to song number for currently playing song because user started playing new song.
@@ -193,7 +182,7 @@ var updateSeekBarWhileSongPlays = function() {
             var $seekBar = $('.seek-control .seek-bar');
  
              updateSeekPercentage($seekBar, seekBarFillRatio);
-             setCurrentTimeInPlayerBar(filterTimeCode(currentTime));
+             setCurrentTimeInPlayerBar(this.getTime());
          });
      }
  };
@@ -296,13 +285,13 @@ var updatePlayerBarSong = function() {
     $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.artist);
     
      $('.main-controls .play-pause').html(playerBarPauseButton);
-     setTotalTimeInPlayerBar(filterTimeCode(currentSongFromAlbum.length));
+     setTotalTimeInPlayerBar(currentSongFromAlbum.duration);
 };
 
 var nextSong = function() {
     var currentSongIndex = trackIndex(currentAlbum, currentSongFromAlbum);
     currentSongIndex++;
-    updateSeekBarWhileSongPlays(); 
+    
 
     if (currentSongIndex >= currentAlbum.songs.length) {
         currentSongIndex = 0;
@@ -311,6 +300,7 @@ var nextSong = function() {
 
      setSong(currentSongIndex + 1);
      currentSoundFile.play();
+     updateSeekBarWhileSongPlays(); 
      
     currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
 
@@ -335,6 +325,7 @@ var previousSong = function() {
 
     setSong(currentSongIndex + 1);
     currentSoundFile.play();
+    updateSeekBarWhileSongPlays(); 
     currentSongFromAlbum = currentAlbum.songs[currentSongIndex];
     updatePlayerBarSong();
 
